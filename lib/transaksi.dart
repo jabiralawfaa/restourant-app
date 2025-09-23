@@ -1,4 +1,4 @@
-
+import 'package:restaurant_app/menu_makanan.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/pesanan.dart';
 
@@ -13,7 +13,8 @@ class TransaksiPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Saring pesanan yang memiliki jumlah > 0
-    final List<Pesanan> pesananAktif = pesananTerpilih.where((item) => item.jumlah > 0).toList();
+    final List<Pesanan> pesananAktif =
+        pesananTerpilih.where((item) => item.jumlah > 0).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -43,7 +44,8 @@ class TransaksiPage extends StatelessWidget {
               itemBuilder: (context, index) {
                 final item = pesananAktif[index];
                 return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
                   child: Row(
                     children: [
                       // Jumlah Pesanan
@@ -96,12 +98,18 @@ class TransaksiPage extends StatelessWidget {
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text("Transaksi Berhasil"),
-                        content: const Text("Pesanan Anda telah berhasil dibuat."),
+                        content:
+                            const Text("Pesanan Anda telah berhasil dibuat."),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop(); // Tutup pop-up
-                              Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+                              Navigator.of(context).pushAndRemoveUntil(
+                                MaterialPageRoute(
+                                  builder: (_) => const MenuMakananApp(),
+                                ),
+                                (route) => false,
+                              );
                             },
                             child: const Text("OK"),
                           ),
@@ -122,7 +130,8 @@ class TransaksiPage extends StatelessWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context); // Kembali ke halaman sebelumnya tanpa aksi lain
+                  Navigator.pop(
+                      context); // Kembali ke halaman sebelumnya tanpa aksi lain
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey,
