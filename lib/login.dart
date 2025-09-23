@@ -14,7 +14,7 @@ class LoginPage extends StatelessWidget {
             child: Column(
               children: [
                 SvgPicture.asset(
-                  'assets/icon/shopping-bag.svg',
+                  'assets/icons/shopping_bag.svg',
                   width: 80,
                   height: 80,
                 ),
