@@ -96,7 +96,7 @@ class LoginPage extends StatelessWidget {
                   alignment: AlignmentGeometry.centerRight,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/lupa-password');
+                      Navigator.pushNamed(context, '/lupa_password');
                     },
                     child: const Text(
                       "Lupa Sandi?",
