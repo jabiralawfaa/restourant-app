@@ -16,7 +16,13 @@ class RegisterPage extends StatelessWidget {
               const SizedBox(height: 40),
 
               // icon
-              SvgPicture.asset('assets/icons/register.svg', height: 50),
+              Center(
+                child: SvgPicture.asset(
+                  'assets/icons/shopping_bag.svg',
+                  width: 80,
+                  height: 80,
+                ),
+              ),
 
               const SizedBox(height: 40),
 
