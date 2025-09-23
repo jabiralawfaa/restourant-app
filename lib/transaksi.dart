@@ -1,64 +1,138 @@
+
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/data/pesanan.dart';
 
-class TransactionPage extends StatelessWidget {
-  final String message;
+class TransaksiPage extends StatelessWidget {
+  final List<Pesanan> pesananTerpilih;
 
-  const TransactionPage({super.key, required this.message});
+  const TransaksiPage({
+    super.key,
+    required this.pesananTerpilih,
+  });
 
   @override
   Widget build(BuildContext context) {
+    // Saring pesanan yang memiliki jumlah > 0
+    final List<Pesanan> pesananAktif = pesananTerpilih.where((item) => item.jumlah > 0).toList();
+
     return Scaffold(
-      backgroundColor: Colors.green[50],
-      body: Center(
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          elevation: 8,
-          margin: const EdgeInsets.all(32),
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
+      appBar: AppBar(
+        title: const Text('Pesanan Anda'),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Header "PESANAN" dan Garis
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Icon(Icons.check_circle,
-                    size: 80, color: Colors.green.shade700),
-                const SizedBox(height: 20),
                 Text(
-                  "Berhasil!",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.green.shade900,
-                  ),
+                  'PESANAN',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 12),
-                Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 24),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // balik ke halaman sebelumnya
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade700,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 14),
-                  ),
-                  child: const Text(
-                    "Oke",
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                  ),
-                ),
+                Divider(thickness: 1.5),
               ],
             ),
           ),
+          // Daftar pesanan yang sudah difilter
+          Expanded(
+            child: ListView.builder(
+              itemCount: pesananAktif.length,
+              itemBuilder: (context, index) {
+                final item = pesananAktif[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      // Jumlah Pesanan
+                      Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${item.jumlah}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      // Nama Makanan
+                      Expanded(
+                        child: Text(
+                          item.nama,
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ),
+                      // Harga per Item
+                      Text(
+                        'Rp. ${item.harga}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.all(16),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  // Tampilkan pop-up "Transaksi berhasil"
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Transaksi Berhasil"),
+                        content: const Text("Pesanan Anda telah berhasil dibuat."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop(); // Tutup pop-up
+                              Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+                            },
+                            child: const Text("OK"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('Bayar'),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // Kembali ke halaman sebelumnya tanpa aksi lain
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
+                child: const Text('Batal'),
+              ),
+            ),
+          ],
         ),
       ),
     );
