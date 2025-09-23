@@ -29,7 +29,7 @@ class TransaksiPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'PESANAN',
+                  'TOTAL',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 Divider(thickness: 1.5),
