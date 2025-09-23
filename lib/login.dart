@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app/register.dart';
+import 'package:restaurant_app/lupa_password.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LoginPage extends StatelessWidget {
@@ -18,9 +20,7 @@ class LoginPage extends StatelessWidget {
                   width: 80,
                   height: 80,
                 ),
-
                 const SizedBox(height: 20),
-
                 const Text(
                   "WELCOME BACK!",
                   style: TextStyle(
@@ -32,11 +32,9 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 const Text(
                   "Sign In to Continue",
-                  style:TextStyle(color: Colors.grey) ,
+                  style: TextStyle(color: Colors.grey),
                 ),
-
                 const SizedBox(height: 30),
-
                 const TextField(
                   decoration: InputDecoration(
                     hintText: "Username",
@@ -44,7 +42,6 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-
                 const TextField(
                   obscureText: true,
                   decoration: InputDecoration(
@@ -53,50 +50,56 @@ class LoginPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.pushNamed(context, '/menu-makanan');
-                        } ,
+                        },
                         style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        padding: const EdgeInsets.symmetric(vertical: 12),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadiusGeometry.circular(20)
-                        ), 
+                          backgroundColor: Colors.blue,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadiusGeometry.circular(20)),
                         ),
                         child: const Text("Login"),
-                        
-                        ),
                       ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pushNamed(context, '/register');
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.lightBlueAccent,
-                            padding: const EdgeInsets.symmetric(vertical: 12),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadiusGeometry.circular(20),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RegisterPage(),
                             ),
-                          ),
-                          child: const Text("Register"),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.lightBlueAccent,
+                          padding: const EdgeInsets.symmetric(vertical: 12),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(20),
                           ),
                         ),
+                        child: const Text("Register"),
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 15),
-
                 Align(
                   alignment: AlignmentGeometry.centerRight,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pushNamed(context, '/lupa_password');
+                         Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ForgotPasswordPage(),
+                            ),
+                          );
                     },
                     child: const Text(
                       "Lupa Sandi?",
@@ -111,7 +114,7 @@ class LoginPage extends StatelessWidget {
             ),
           ),
         ),
-        ),
+      ),
     );
   }
 }
