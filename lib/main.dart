@@ -1,7 +1,8 @@
 import 'package:restaurant_app/register.dart';
 import 'package:restaurant_app/login.dart';
-import 'package:restaurant_app/lupa_password.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,17 +11,36 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+Future<Widget> _getInitialPage() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    if (isLoggedIn) {
+      return RegisterPage();
+    } else {
+      return LoginPage();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Flutter Login UI',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
+        ),
+      ),
       debugShowCheckedModeBanner: false,
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(), 
-        '/register': (context) => RegisterPage(), 
-        '/lupa_password': (context) => ForgotPasswordPage(), 
-      },
+      home: FutureBuilder<Widget>(
+        future: _getInitialPage(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return snapshot.data!;
+          }
+          return Center(child: CircularProgressIndicator());
+        },
+      ),
     );
   }
 }
