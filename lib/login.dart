@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/register.dart';
 import 'package:restaurant_app/lupa_password.dart';
+import 'package:restaurant_app/menu_makanan.dart';
 import 'package:flutter_svg/svg.dart';
 
 class LoginPage extends StatelessWidget {
@@ -55,7 +56,12 @@ class LoginPage extends StatelessWidget {
                     Expanded(
                       child: ElevatedButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, '/menu-makanan');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MenuMakananApp(),
+                            ),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
