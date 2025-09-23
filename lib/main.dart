@@ -1,4 +1,6 @@
 import 'package:restaurant_app/register.dart';
+import 'package:restaurant_app/login.dart';
+import 'package:restaurant_app/lupa_password.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +17,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => RegisterPage(), 
+        '/': (context) => LoginPage(), 
+        '/register': (context) => RegisterPage(), 
+        '/lupa_password': (context) => ForgotPasswordPage(), 
       },
     );
   }
