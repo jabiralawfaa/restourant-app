@@ -91,26 +91,32 @@ class _MenuMakananPageState extends State<MenuMakananPage> {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  // Logika transaksi
-                  double total = 0;
-                  for (var item in menuMakanan) {
-                    total += item.harga * item.jumlah;
-                  }
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      title: const Text('Total Pembayaran'),
-                      content: Text('Total yang harus dibayar: Rp ${total.toStringAsFixed(0)}'),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: const Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
+                  Navigator.pushNamed(context, 'transaksi');
                 },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16)
+                ),
                 child: const Text('Transaksi'),
+              ),
+            ),
+            const SizedBox(width: 16),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: _resetPesanan,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 16)
+                ),
+                child: const Text('Reset'),
               ),
             )
           ],
