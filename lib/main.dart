@@ -1,4 +1,4 @@
-import 'package:restaurant_app/register.dart';
+import 'package:restaurant_app/menu_makanan.dart';
 import 'package:restaurant_app/login.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ Future<Widget> _getInitialPage() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
     if (isLoggedIn) {
-      return RegisterPage();
+      return MenuMakananApp();
     } else {
       return LoginPage();
     }
