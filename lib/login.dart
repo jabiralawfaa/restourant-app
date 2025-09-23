@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
                 const SizedBox(height: 4),
                 const Text(
                   "Sign In to Continue",
-                  style:TextStyle(color: Colors.grey) ,
+                  style:TextStyle(color: Colors.blue) ,
                 ),
 
                 const SizedBox(height: 30),
@@ -99,7 +99,7 @@ class LoginPage extends StatelessWidget {
                       Navigator.pushNamed(context, '/lupa_password');
                     },
                     child: const Text(
-                      "Lupa Sandi?",
+                      "Lost password?",
                       style: TextStyle(
                         color: Colors.black87,
                         fontWeight: FontWeight.w500,
