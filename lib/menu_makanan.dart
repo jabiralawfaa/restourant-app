@@ -32,7 +32,7 @@ class _MenuMakananPageState extends State<MenuMakananPage> {
     Pesanan(nama: 'Gado-Gado', harga: 13000),
     Pesanan(nama: 'Bakso', harga: 14000),
   ];
-
+  
   void _tambahPesanan(int index) {
     setState(() {
       menuMakanan[index].jumlah++;

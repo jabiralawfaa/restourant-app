@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/data/pesanan.dart';
 
@@ -36,7 +35,6 @@ class TransaksiPage extends StatelessWidget {
               ],
             ),
           ),
-          // Daftar pesanan yang sudah difilter
           Expanded(
             child: ListView.builder(
               itemCount: pesananAktif.length,
@@ -100,8 +98,8 @@ class TransaksiPage extends StatelessWidget {
                         actions: [
                           TextButton(
                             onPressed: () {
-                              Navigator.of(context).pop(); // Tutup pop-up
-                              Navigator.of(context).pop(); // Kembali ke halaman sebelumnya
+                              Navigator.of(context).pop(); 
+                              Navigator.of(context).pop(); 
                             },
                             child: const Text("OK"),
                           ),
@@ -122,7 +120,7 @@ class TransaksiPage extends StatelessWidget {
             Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pop(context); // Kembali ke halaman sebelumnya tanpa aksi lain
+                  Navigator.pop(context); 
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey,
