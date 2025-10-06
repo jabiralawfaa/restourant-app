@@ -6,7 +6,7 @@ class ListMenu extends StatelessWidget {
   final VoidCallback onAdd;
   final VoidCallback onRemove;
 
-  const ListMenu({
+  const ListMenu ({
     super.key,
     required this.item,
     required this.onAdd,
@@ -15,94 +15,68 @@ class ListMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      child: Row(
-        children: [
-          // Quantity Circle (Left)
-          Container(
-            width: 32,
-            height: 32,
-            decoration: BoxDecoration(
-              color: Colors.grey[300],
-              shape: BoxShape.circle,
+    return InkWell(
+      onTap: () {},
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3), // changes position of shadow
             ),
-            child: Center(
-              child: Text(
-                item.jumlah.toString(),
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+          ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Nama dan harga
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.nama,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 4),
+                Text(
+                  'Rp ${item.harga.toStringAsFixed(0)}',
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.grey,
+                  ),
+                ),
+              ],
             ),
-          ),
-          
-          const SizedBox(width: 16),
-          
-          // Item Name (Center-Left)
-          Expanded(
-            flex: 2,
-            child: Text(
-              item.nama,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
+
+            // Tombol tambah dan jumlah
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.remove_circle_outline),
+                  onPressed: onRemove,
+                ),
+                Text(
+                  item.jumlah.toString(),
+                  style: const TextStyle(fontSize: 16),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.add_circle_outline),
+                  onPressed: onAdd,
+                ),
+              ],
             ),
-          ),
-          
-          // Price (Center-Right)
-          Text(
-            'Rp ${item.harga.toInt()}',
-            style: TextStyle(
-              fontSize: 14,
-              color: Colors.grey[600],
-            ),
-          ),
-          
-          const SizedBox(width: 16),
-          
-          // Remove Button
-          GestureDetector(
-            onTap: onRemove,
-            child: Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[400]!),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: const Icon(
-                Icons.remove,
-                size: 18,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          
-          const SizedBox(width: 8),
-          
-          // Add Button
-          GestureDetector(
-            onTap: onAdd,
-            child: Container(
-              width: 32,
-              height: 32,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.grey[400]!),
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: const Icon(
-                Icons.add,
-                size: 18,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-        ],
-      ),
+          ],
+        ),
+      )
     );
   }
 }

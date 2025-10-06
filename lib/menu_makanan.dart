@@ -25,8 +25,6 @@ class MenuMakananPage extends StatefulWidget {
   _MenuMakananPageState createState() => _MenuMakananPageState();
 }
 
-enum MenuCategory { makanan, minuman }
-
 class _MenuMakananPageState extends State<MenuMakananPage> {
   List<Pesanan> menuMakanan = [
     Pesanan(nama: 'Nasi Goreng', harga: 15000),
@@ -38,60 +36,31 @@ class _MenuMakananPageState extends State<MenuMakananPage> {
 
   void _tambahPesanan(int index) {
     setState(() {
-      currentItems[index].jumlah++;
+      menuMakanan[index].jumlah++;
     });
   }
 
   void _kurangiPesanan(int index) {
     setState(() {
-      if (currentItems[index].jumlah > 0) {
-        currentItems[index].jumlah--;
+      if (menuMakanan[index].jumlah > 0) {
+        menuMakanan[index].jumlah--;
       }
     });
   }
 
   void _resetPesanan() {
     setState(() {
-      for (var category in menuData.values) {
-        for (var item in category) {
-          item.jumlah = 0;
-        }
+      for (var item in menuMakanan) {
+        item.jumlah = 0;
       }
     });
-  }
-
-  void _changePage(int page) {
-    setState(() {
-      currentPage = page;
-      // Update category based on page
-      if (page <= 2) {
-        currentCategory = MenuCategory.makanan;
-      } else {
-        currentCategory = MenuCategory.minuman;
-      }
-    });
-  }
-
-  void _previousPage() {
-    if (currentPage > 1) {
-      _changePage(currentPage - 1);
-    }
-  }
-
-  void _nextPage() {
-    if (currentPage < totalPages) {
-      _changePage(currentPage + 1);
-    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xFFF5F3FF),
       appBar: AppBar(
-        title: const Text('MENUS'),
-        backgroundColor: Color(0xFFF5F3FF),
-        elevation: 0,
+        title: const Text('Menu Makanan'),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -99,125 +68,32 @@ class _MenuMakananPageState extends State<MenuMakananPage> {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Category Header
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text(
-              currentCategory == MenuCategory.makanan ? 'Makanan' : 'Minuman',
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Colors.grey,
-              ),
-            ),
-          ),
-          
-          // Items List
-          Expanded(
-            child: ListView.builder(
-              itemCount: displayedItems.length,
-              itemBuilder: (context, index) {
-                return ListMenu(
-                  item: displayedItems[index],
-                  onAdd: () => _tambahPesanan(index),
-                  onRemove: () => _kurangiPesanan(index),
-                );
-              },
-            ),
-          ),
-          
-          // Pagination
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Previous Button
-                GestureDetector(
-                  onTap: currentPage > 1 ? _previousPage : null,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Row(
-                      children: [
-                        Icon(Icons.chevron_left, size: 16, 
-                             color: currentPage > 1 ? Colors.black : Colors.grey),
-                        Text('Previous', 
-                             style: TextStyle(
-                               color: currentPage > 1 ? Colors.black : Colors.grey)),
-                      ],
-                    ),
-                  ),
-                ),
-                
-                const SizedBox(width: 16),
-                
-                // Page Numbers
-                ...List.generate(totalPages, (index) {
-                  int pageNum = index + 1;
-                  bool isActive = pageNum == currentPage;
-                  
-                  return GestureDetector(
-                    onTap: () => _changePage(pageNum),
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 4),
-                      padding: const EdgeInsets.all(8),
-                      decoration: BoxDecoration(
-                        color: isActive ? Colors.black : Colors.transparent,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Text(
-                        pageNum.toString(),
-                        style: TextStyle(
-                          color: isActive ? Colors.white : Colors.black,
-                          fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-                
-                const SizedBox(width: 16),
-                
-                // Next Button
-                GestureDetector(
-                  onTap: currentPage < totalPages ? _nextPage : null,
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    child: Row(
-                      children: [
-                        Text('Next',
-                             style: TextStyle(
-                               color: currentPage < totalPages ? Colors.black : Colors.grey)),
-                        Icon(Icons.chevron_right, size: 16,
-                             color: currentPage < totalPages ? Colors.black : Colors.grey),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      body: Container(
+        margin: EdgeInsets.all(8),
+        child: ListView.builder(
+          padding: EdgeInsets.all(8),
+          itemCount: menuMakanan.length,
+          itemBuilder: (context, index) {
+            return ListMenu(
+              item: menuMakanan[index],
+              onAdd: () => _tambahPesanan(index),
+              onRemove: () => _kurangiPesanan(index),
+            );
+          },
+        ),
       ),
       bottomNavigationBar: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          color: Color(0xFFF5F3FF),
+          color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // tombol Transaction
+              // tombol Transaksi
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
-                    // Get all selected items from both categories
-                    final pesananTerpilih = <Pesanan>[];
-                    for (var category in menuData.values) {
-                      pesananTerpilih.addAll(category.where((item) => item.jumlah > 0));
-                    }
-                    
+                    final pesananTerpilih =
+                        menuMakanan.where((item) => item.jumlah > 0).toList();
                     if (pesananTerpilih.isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
@@ -240,10 +116,10 @@ class _MenuMakananPageState extends State<MenuMakananPage> {
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 16)),
-                  child: const Text('Transaction'),
+                  child: const Text('Transaksi'),
                 ),
               ),
               const SizedBox(width: 16),
@@ -254,7 +130,7 @@ class _MenuMakananPageState extends State<MenuMakananPage> {
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25),
+                        borderRadius: BorderRadius.circular(20),
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 16)),
                   child: const Text('Reset'),
